@@ -1,0 +1,164 @@
+import gmsh
+import numpy as np
+
+# Constants and baseline Y-coordinates for points p36-p41
+Y_P35 = 64.613
+Y_P42 = 22.605
+y_coords = [53.81, 48.61, 43.44, 36.18, 28.92, 25.30]
+
+def generar_malla_3d():
+    try:
+        # Initialize Gmsh
+        gmsh.initialize()
+        gmsh.model.add("aerospike_3d_final")
+
+        s = 0.001  # Scale factor for coordinates (mm to m)
+
+        # Mesh size definitions
+        tm_far   = 40.0 * s
+        tm_mid   = 20.0 * s
+        tm_near  =  3.0 * s
+        tm_spike =  1.2 * s
+        tm_min   =  1.5 * s
+
+        # Define points with local mesh sizes
+        p1  = gmsh.model.geo.addPoint(749.174    * s,    0.0   * s, 0, tm_near)
+        p2  = gmsh.model.geo.addPoint(5840.0     * s,    0.0   * s, 0, tm_far)
+        p3  = gmsh.model.geo.addPoint(5840.0     * s, 1836.0   * s, 0, tm_far)
+        p4  = gmsh.model.geo.addPoint(   0.0     * s, 1836.0   * s, 0, tm_far)
+        p5  = gmsh.model.geo.addPoint(   0.0     * s,   95.2   * s, 0, tm_mid)
+        p6  = gmsh.model.geo.addPoint( 660.218    * s,   95.2   * s, 0, tm_mid)
+        p8  = gmsh.model.geo.addPoint( 666.327    * s,   92.875 * s, 0, tm_near)
+        p9  = gmsh.model.geo.addPoint( 674.468    * s,   87.751 * s, 0, tm_near)
+        p10 = gmsh.model.geo.addPoint( 681.344    * s,   89.252 * s, 0, tm_near)
+        p11 = gmsh.model.geo.addPoint( 685.418    * s,   89.949 * s, 0, tm_near)
+        p12 = gmsh.model.geo.addPoint( 690.382    * s,   89.949 * s, 0, tm_near)
+        p13 = gmsh.model.geo.addPoint( 690.346    * s,   71.800 * s, 0, tm_near)
+        p14 = gmsh.model.geo.addPoint( 689.722    * s,   69.394 * s, 0, tm_near)
+        p15 = gmsh.model.geo.addPoint( 688.701    * s,   67.733 * s, 0, tm_near)
+        p16 = gmsh.model.geo.addPoint( 686.663    * s,   66.780 * s, 0, tm_near)
+        p17 = gmsh.model.geo.addPoint( 684.626    * s,   66.525 * s, 0, tm_near)
+        p18 = gmsh.model.geo.addPoint( 682.576    * s,   66.810 * s, 0, tm_near)
+        p20 = gmsh.model.geo.addPoint( 681.000    * s,   68.100 * s, 0, tm_near)
+        p21 = gmsh.model.geo.addPoint( 677.504    * s,   71.970 * s, 0, tm_near)
+        p22 = gmsh.model.geo.addPoint( 674.070    * s,   74.663 * s, 0, tm_near)
+        p23 = gmsh.model.geo.addPoint( 666.945    * s,   77.981 * s, 0, tm_near)
+        p25 = gmsh.model.geo.addPoint( 661.600    * s,   79.058 * s, 0, tm_near)
+        p26 = gmsh.model.geo.addPoint( 616.536    * s,   78.308 * s, 0, tm_near)
+        p27 = gmsh.model.geo.addPoint( 527.356    * s,   78.308 * s, 0, tm_near)
+        p28 = gmsh.model.geo.addPoint( 527.356    * s,   52.810 * s, 0, tm_near)
+        p29 = gmsh.model.geo.addPoint( 617.650    * s,   52.542 * s, 0, tm_near)
+        p30 = gmsh.model.geo.addPoint( 631.910    * s,   54.502 * s, 0, tm_near)
+        p31 = gmsh.model.geo.addPoint( 646.175    * s,   60.691 * s, 0, tm_near)
+        p32 = gmsh.model.geo.addPoint( 656.429    * s,   65.961 * s, 0, tm_near)
+        p33 = gmsh.model.geo.addPoint( 666.553    * s,   69.305 * s, 0, tm_near)
+        p34 = gmsh.model.geo.addPoint( 670.516    * s,   67.886 * s, 0, tm_min)
+        p35 = gmsh.model.geo.addPoint( 673.832    * s,   64.613 * s, 0, tm_spike)
+
+        p36 = gmsh.model.geo.addPoint(681.825 * s, y_coords[0] * s, 0, tm_spike)
+        p37 = gmsh.model.geo.addPoint(687.936 * s, y_coords[1] * s, 0, tm_spike)
+        p38 = gmsh.model.geo.addPoint(695.827 * s, y_coords[2] * s, 0, tm_spike)
+        p39 = gmsh.model.geo.addPoint(710.800 * s, y_coords[3] * s, 0, tm_spike)
+        p40 = gmsh.model.geo.addPoint(728.500 * s, y_coords[4] * s, 0, tm_spike)
+        p41 = gmsh.model.geo.addPoint(739.284 * s, y_coords[5] * s, 0, tm_spike)
+
+        p42 = gmsh.model.geo.addPoint(749.042 * s,  22.605 * s, 0, tm_spike)
+        p43 = gmsh.model.geo.addPoint(751.034 * s,   4.356 * s, 0, tm_spike)
+        p44 = gmsh.model.geo.addPoint(754.839 * s,   6.914 * s, 0, tm_min)
+        p45 = gmsh.model.geo.addPoint(759.162 * s,  14.270 * s, 0, tm_near)
+        p46 = gmsh.model.geo.addPoint(758.019 * s,  17.270 * s, 0, tm_near)
+        p47 = gmsh.model.geo.addPoint(755.222 * s,  20.256 * s, 0, tm_near)
+
+        # Define lines, splines, and beziers
+        l_1  = gmsh.model.geo.addLine(p1, p2)
+        l_2  = gmsh.model.geo.addLine(p2, p3)
+        l_3  = gmsh.model.geo.addLine(p3, p4)
+        l_4  = gmsh.model.geo.addLine(p4, p5)
+        l_5  = gmsh.model.geo.addLine(p5, p6)
+        l_6  = gmsh.model.geo.addSpline([p6, p8, p9, p10])
+        l_7  = gmsh.model.geo.addLine(p10, p11)
+        l_8  = gmsh.model.geo.addLine(p11, p12)
+        l_9  = gmsh.model.geo.addLine(p12, p13)
+        l_10 = gmsh.model.geo.addSpline([p13, p14, p15, p16, p17, p18, p20])
+        l_11 = gmsh.model.geo.addSpline([p20, p21, p22, p23, p25])
+        l_12 = gmsh.model.geo.addLine(p25, p26)
+        l_13 = gmsh.model.geo.addLine(p26, p27)  # Horizontal segment before inlet
+        l_14 = gmsh.model.geo.addLine(p27, p28)  # Inlet (vertical line between p27 and p28)
+        l_15 = gmsh.model.geo.addLine(p28, p29)  # Segment after inlet
+        l_16 = gmsh.model.geo.addBezier([p29, p30, p31, p32, p33, p34, p35])
+        l_17 = gmsh.model.geo.addBezier([p35, p36, p37, p38, p39, p40, p41, p42])
+        l_18 = gmsh.model.geo.addSpline([p42, p47, p46, p45, p44, p43, p1])
+
+        gmsh.model.geo.synchronize()
+        gmsh.model.geo.removeAllDuplicates()
+        gmsh.model.geo.synchronize()
+
+        # Create curve loop and surface
+        master_loop = gmsh.model.geo.addCurveLoop([
+            l_1, l_2, l_3, l_4, l_5, l_6, l_7, l_8, l_9,
+            l_10, l_11, l_12, l_13, l_14, l_15, l_16, l_17, l_18
+        ])
+        surface = gmsh.model.geo.addPlaneSurface([master_loop])
+        gmsh.model.geo.synchronize()
+
+        # --- RECOMBINE 2D SURFACE TO QUADS & PRISMS ---
+        gmsh.model.geo.mesh.setRecombine(2, surface)
+        gmsh.model.geo.synchronize()
+
+        # Set Front/Back recombine mesh algorithm option
+        gmsh.option.setNumber("Mesh.RecombineAll", 1)
+        gmsh.option.setNumber("Mesh.Algorithm", 8) # Frontal-Delaunay for Quads
+
+        # --- 3D EXTRUSION (5 mm width in Z direction, 1 layer, recombine=True) ---
+        extents = gmsh.model.geo.extrude(
+            [(2, surface)], 0.0, 0.0, 5.0 * s, 
+            numElements=[1], 
+            heights=[1.0], 
+            recombine=True
+        )
+        gmsh.model.geo.synchronize()
+
+        top_surface = extents[0][1]
+        volume_tag  = extents[1][1]
+
+        # Boundary mapping based on extrusion line order
+        axis_surf    = [extents[2][1]]  # l1
+        outlet1_surf = [extents[3][1]]  # l2
+        outlet2_surf = [extents[4][1]]  # l3
+        outlet3_surf = [extents[5][1]]  # l4
+        inlet_surf   = [extents[15][1]] # l14 (inlet between p27 and p28)
+
+        # wall1: include wall boundaries from l5 to l13 (indices 6-14) AND l15 to l18 (indices 16-19), skipping l14 (index 15)
+        wall_indices  = list(range(6, 15)) + list(range(16, 20))
+        wall_surfaces = [extents[i][1] for i in wall_indices]
+
+        # Assign Physical Groups with Names
+        gmsh.model.addPhysicalGroup(3, [volume_tag], name="fluid")
+        gmsh.model.addPhysicalGroup(2, axis_surf,    name="axis")
+        gmsh.model.addPhysicalGroup(2, outlet1_surf, name="outlet1")
+        gmsh.model.addPhysicalGroup(2, outlet2_surf, name="outlet2")
+        gmsh.model.addPhysicalGroup(2, outlet3_surf, name="outlet3")
+        gmsh.model.addPhysicalGroup(2, inlet_surf,   name="inlet")
+        gmsh.model.addPhysicalGroup(2, wall_surfaces, name="wall1")
+        gmsh.model.addPhysicalGroup(2, [surface, top_surface], name="front_back")
+        gmsh.model.geo.synchronize()
+
+        # Generate 3D mesh
+        gmsh.model.mesh.generate(3)
+        gmsh.model.mesh.removeDuplicateNodes()
+
+        # Force MSH version 2.2 for OpenFOAM compatibility
+        gmsh.option.setNumber("Mesh.MshFileVersion", 2.2)
+
+        # Save mesh to file for OpenFOAM
+        output_filename = "aerospike.msh"
+        gmsh.write(output_filename)
+        print(f"Malla 3D generada y guardada exitosamente en '{output_filename}' (Versión 2.2 con Prismas/Hexas).")
+
+    except Exception as e:
+        print(f"Error en Gmsh: {e}")
+    finally:
+        gmsh.finalize()
+
+if __name__ == "__main__":
+    generar_malla_3d()
